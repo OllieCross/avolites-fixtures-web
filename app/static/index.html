@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avolites Fixture Files</title>
+<meta name="description" content="Download individual Avolites Titan / Tiger Touch fixture personality (.d4) files, kept in sync daily with the official library.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23e8590c'/%3E%3Cpath d='M16 6v13m0 0l-5-5m5 5l5-5M8 25h16' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>Avolites Fixture Files</h1>
+    <p class="sub">Individual Titan / Tiger Touch personality files (<code>.d4</code>). Mirrors the official library, checked daily.</p>
+    <p class="meta" id="meta" aria-live="polite">Loading…</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="tab-fixtures" aria-selected="true" aria-controls="panel-fixtures">Fixtures</button>
+    <button role="tab" id="tab-changes" aria-selected="false" aria-controls="panel-changes">Changelog</button>
+  </nav>
+
+  <section id="panel-fixtures" role="tabpanel" aria-labelledby="tab-fixtures">
+    <form class="filters" id="filters" autocomplete="off" onsubmit="return false">
+      <label class="f-search">
+        <span>Search model</span>
+        <input type="search" id="q" placeholder="e.g. Sharpy, MAC Aura, par 64…" maxlength="200">
+      </label>
+      <label class="f-maker">
+        <span>Manufacturer</span>
+        <input type="text" id="maker" list="makers" placeholder="Any manufacturer" maxlength="200">
+        <datalist id="makers"></datalist>
+      </label>
+      <label>
+        <span>Show</span>
+        <select id="status">
+          <option value="">All</option>
+          <option value="active">Current only</option>
+          <option value="new">New</option>
+          <option value="updated">Updated</option>
+          <option value="removed">Removed upstream</option>
+        </select>
+      </label>
+      <label>
+        <span>Sort</span>
+        <select id="sort">
+          <option value="name">Manufacturer A–Z</option>
+          <option value="recent">Recently changed</option>
+        </select>
+      </label>
+    </form>
+
+    <div class="count" id="count" aria-live="polite"></div>
+
+    <div class="table-wrap">
+      <table id="table">
+        <thead>
+          <tr>
+            <th class="c-sel"><input type="checkbox" id="selpage" aria-label="Select all on this page"></th>
+            <th>Manufacturer</th>
+            <th>Model</th>
+            <th class="c-modes">Modes</th>
+            <th class="c-rev">Revised</th>
+            <th class="c-dl"><span class="sr">Download</span></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <div class="empty" id="empty" hidden></div>
+    <div class="more"><button id="more" type="button" hidden>Load more</button></div>
+  </section>
+
+  <section id="panel-changes" role="tabpanel" aria-labelledby="tab-changes" hidden>
+    <div id="changes"></div>
+  </section>
+
+  <section class="howto">
+    <h2>Installing a file</h2>
+    <ul>
+      <li><strong>Console (Tiger Touch etc.):</strong> copy the <code>.d4</code> to a USB stick, then into <code>D:\Personalities</code> on the console. Restart Titan.</li>
+      <li><strong>Titan PC / Simulator:</strong> put it in <code>Documents\Titan\Personalities</code>. Restart Titan.</li>
+      <li>Files in that user folder take priority over the built-in library and survive library updates.</li>
+    </ul>
+  </section>
+</main>
+
+<div class="selbar" id="selbar" hidden>
+  <span id="selcount"></span>
+  <button type="button" id="clearsel" class="ghost">Clear</button>
+  <a id="zip" class="btn" href="#">Download ZIP</a>
+</div>
+
+<footer class="wrap foot">
+  Unofficial mirror, not affiliated with Avolites Ltd. Fixture files are © Avolites Ltd. and contributors; source:
+  <a href="https://personalities.avolites.com" rel="noopener">personalities.avolites.com</a>.
+  Use at your own risk and check a fixture before show day.
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

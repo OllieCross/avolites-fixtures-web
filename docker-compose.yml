@@ -1,0 +1,41 @@
+services:
+  web:
+    build: .
+    image: avolites-fixtures:latest
+    restart: unless-stopped
+    volumes:
+      - data:/data
+    networks:
+      - traefik
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8000/api/stats', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=${TRAEFIK_NETWORK:-proxy}
+      - traefik.http.routers.avolites.rule=Host(`${DOMAIN:-avolites.olliecross.com}`)
+      - traefik.http.routers.avolites.entrypoints=${TRAEFIK_ENTRYPOINT:-websecure}
+      - traefik.http.routers.avolites.tls=true
+      - traefik.http.routers.avolites.tls.certresolver=${TRAEFIK_CERTRESOLVER:-letsencrypt}
+      - traefik.http.services.avolites.loadbalancer.server.port=8000
+
+  updater:
+    image: avolites-fixtures:latest
+    restart: unless-stopped
+    command: ["python", "-m", "app.updater"]
+    environment:
+      UPDATE_AT: ${UPDATE_AT:-03:30}
+    volumes:
+      - data:/data
+    depends_on:
+      - web
+
+volumes:
+  data:
+
+networks:
+  traefik:
+    external: true
+    name: ${TRAEFIK_NETWORK:-proxy}
