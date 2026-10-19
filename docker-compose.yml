@@ -19,6 +19,7 @@ services:
       - traefik.http.routers.avolites.entrypoints=${TRAEFIK_ENTRYPOINT:-websecure}
       - traefik.http.routers.avolites.tls=true
       - traefik.http.routers.avolites.tls.certresolver=${TRAEFIK_CERTRESOLVER:-letsencrypt}
+      - traefik.http.routers.avolites.middlewares=${TRAEFIK_MIDDLEWARES:-secHeaders@file}
       - traefik.http.services.avolites.loadbalancer.server.port=8000
 
   updater:
@@ -29,8 +30,6 @@ services:
       UPDATE_AT: ${UPDATE_AT:-03:30}
     volumes:
       - data:/data
-    depends_on:
-      - web
 
 volumes:
   data:
